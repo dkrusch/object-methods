@@ -43,12 +43,13 @@ let dinner = {
 };
 
 for (let entries of Object.entries(dinner)) {
-  console.log(entries);
   document.querySelector(".container").innerHTML += `<article class="food">${
     entries[0]
   }: ${entries[1]}</article>`;
 }
 /* END LIGHTNING EXERCISES */
+
+let agent = "";
 
 const salesByWeek = [
   {
@@ -166,16 +167,11 @@ const salesByWeek = [
 // Display the gross profit made on the sale.
 
 salesByWeek.forEach(sale => {
-  let agent = "";
   let car = [];
   let profit = 0;
-  console.log(sale);
   car = Object.entries(sale.vehicle);
   agent = `${sale.sales_agent.first_name} ${sale.sales_agent.last_name}`;
   profit = sale.gross_profit;
-  console.log(agent);
-  console.log(car);
-  console.log(profit);
   document.querySelector(".container").innerHTML += `<h1>${agent}</h1>
     <ul>
         <li>${car[0][0]}: ${car[0][1]}</li>
@@ -191,21 +187,17 @@ salesByWeek.forEach(sale => {
 const searchInput = document.querySelector("#searchInput");
 
 searchInput.addEventListener("keypress", event => {
-  document.querySelector(".container").innerHTML = "";
   if (event.charCode === 13) {
-    const searchTerm = event.target.value;
-    console.log(searchTerm)
+    document.querySelector(".container").innerHTML = "";
+    const searchTerm = event.target.value.toUpperCase();
     salesByWeek.forEach(sale => {
-        console.log(Object.values(sale.sales_agent).includes("a"))
-      if (Object.values(sale.sales_agent).includes(searchTerm)) {
-        document.querySelector(".container").innerHTML += `<h1>${agent}</h1>
-            <ul>
-                <li>${car[0][0]}: ${car[0][1]}</li>
-                <li>${car[1][0]}: ${car[1][1]}</li>
-                <li>${car[2][0]}: ${car[2][1]}</li>
-                <li>${car[3][0]}: ${car[3][1]}</li>
-            </ul>
-            <h2>${profit}</h2>
+      let agentName = `${sale.sales_agent.first_name} ${sale.sales_agent.last_name}`
+        // console.log(Object.values(sale.sales_agent).includes("a"))
+      if (agentName.toUpperCase().match(searchTerm)) {
+        console.log(sale.sales_agent)
+        document.querySelector(".container").innerHTML += `<h1>${sale.sales_agent.first_name} ${sale.sales_agent.last_name}</h1>
+            <h2>Email: ${sale.sales_agent.email}
+            <h2>Profit: $${sale.gross_profit}</h2>
             <hr>
             `;
       }
